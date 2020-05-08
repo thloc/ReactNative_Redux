@@ -1,20 +1,35 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+
+import ChangeColor from './ChangeColor';
 
 class Controller extends Component {
   constructor(props) {
     super(props);
     this.state = {  };
   }
+
+  onDownKey() {
+    this.props.dispatch({ type: 'DOWN' });
+  }
+
   render() {
     return (
       <View style={styleController.controller}>
           <Text style={styleController.controllName}>CONTROLLER COMPONENT</Text>
+
+          <ChangeColor/>
+
           <View style={styleController.buttonContainer}>
-            <TouchableOpacity style={styleController.button}>
+            <TouchableOpacity style={styleController.button}
+            onPress={() => {
+              this.props.dispatch({ type: 'UP' });
+            }}>
               <Text style={styleController.buttonText}>+</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styleController.button}>
+            <TouchableOpacity style={styleController.button}
+            onPress={this.onDownKey.bind(this)}>
               <Text style={styleController.buttonText}>-</Text>
             </TouchableOpacity>
           </View>
@@ -22,6 +37,8 @@ class Controller extends Component {
     );
   }
 }
+
+export default connect()(Controller);
 
 const styleController = StyleSheet.create({
   controller: {
@@ -52,5 +69,3 @@ const styleController = StyleSheet.create({
     fontSize: 40,
   },
 });
-
-export default Controller;

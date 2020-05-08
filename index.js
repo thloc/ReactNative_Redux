@@ -11,14 +11,18 @@ import App from './App';
 import {name as appName} from './app.json';
 
 
-const defaultStage = {value: 0};
+const defaultStage = {value: 0, highlight: false};
 
 const reducer = (state = defaultStage, action) => {
-  if (state.type === 'UP') {
-    return { value: state.value + 1 };
+  if (action.type === 'UP') {
+    return { value: state.value + 1, highlight: state.highlight };
   }
-  if (state.type === 'DOWN') {
-    return { value: state.value - 1 };
+  if (action.type === 'DOWN') {
+    return { value: state.value - 1, highlight: state.highlight };
+  }
+
+  if (action.type === 'CHANGE_COLOR') {
+    return { value: state.value, highlight: !state.highlight };
   }
 
   return state;

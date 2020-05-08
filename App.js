@@ -3,13 +3,17 @@ import { View, Text, StyleSheet } from 'react-native';
 
 import Controller from './src/Controller';
 
-export default class App extends Component {
+import {connect} from 'react-redux';
+
+class App extends Component {
   render() {
+    const color = this.props.myHighlight ? 'yellow' : 'white';
+
     return (
       <View style={styleApp.container}>
         <View style={styleApp.header}>
           <Text style={styleApp.appName}>EXAM 1: {'\n'}APP COMPONENT</Text>
-          <Text style={styleApp.value}>0</Text>
+          <Text style={{ fontSize: 40, color }}>{this.props.myValue}</Text>
         </View>
 
         <Controller/>
@@ -17,6 +21,12 @@ export default class App extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return { myValue: state.value, myHighlight: state.highlight };
+}
+
+export default connect(mapStateToProps)(App);
 
 const styleApp = StyleSheet.create({
   container: {
